@@ -1,12 +1,12 @@
 <script>
 	import Card from '$lib/components/Card.svelte';
-	import { players, self } from '../_store';
+	import { players, nickname } from '../_store';
 </script>
 
 <div class="players">
 	<div class="hands">
 		{#each $players as player}
-			{#if player.nickname !== $self.nickname}
+			{#if player.nickname !== $nickname}
 				<div class="hand">
 					<div class="nickname">
 						{player.nickname}

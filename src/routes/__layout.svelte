@@ -1,6 +1,7 @@
 <script>
 	import '../app.scss';
   import 'typeface-work-sans';
+  import { onMount } from 'svelte';
 </script>
 
 <slot />

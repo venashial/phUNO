@@ -1,11 +1,8 @@
 <script>
 	import Card from '$lib/components/Card.svelte';
-
 	import { onMount } from 'svelte';
-
-  import { self } from '../_store.js'
-
-  let focusedCard = -1
+  import { hand, focused } from '../_store.js'
+  import { choose } from '$lib/utils/actions.js'
 
 	let handEl;
 
@@ -39,9 +36,9 @@
 </script>
 
 <div class="hand">
-  <div class="hand-bg"></div>
-	{#each $self.hand as card, index}
-    <Card {...card} focused={index === focusedCard} on:click={() => { focusedCard = focusedCard !== index ? index : -1 }} />
+  <div class="hand-bg" on:click={() => choose('hand')}></div>
+	{#each $hand as card (card.id)}
+    <Card {...card} focused={$focused.location === 'hand' && $focused.cardIndex === card.id} on:click={() => choose('hand', card.id)} />
   {/each}
 </div>
 

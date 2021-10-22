@@ -6,6 +6,7 @@
 	export let symbol = '';
 	export let image = '';
 	export let focused = false;
+  export let floatLeft = true;
 	let animationSpeed = 1;
 
 	let displayColor = [
@@ -27,10 +28,10 @@
 
 <div
 	class="card"
-	style="transform: rotate({focused ? 364 : Math.random() * 2 + 359}deg) translate({focused
-		? -20
+	style="transform: rotate({focused ? (floatLeft ? 364 : Math.random() * 10 + 355) : Math.random() * 2 + 359}deg) translate({focused
+		? (floatLeft ? -20 : 0)
 		: Math.random() * 10 - 5}px, {focused
-		? -20
+		? (floatLeft ? -20 : -40)
 		: Math.random() * 10 - 5}px); transition: transform {animationSpeed}s ease-in-out;"
 	on:click={() => dispatch('click')}
 >
@@ -88,6 +89,7 @@
 		transition: transform 1s ease-in-out;
 
 		.inner {
+      position: relative;
 			border: var(--border) solid hsl(0, 0%, 100%);
 			box-shadow: 0 -0.2em 0.5em hsla(0, 0%, 0%, 0.4);
 			border-radius: calc(var(--border) * 1.4);
@@ -101,22 +103,46 @@
 			justify-content: center;
 			align-items: center;
 			transition: border 0.5s ease-in-out;
+      overflow: hidden;
 
 			&.focused {
-       animation: 1.5s ease-in-out infinite pulse;
-			}
+				&:after {
+					animation: shine 1.5s ease-in-out infinite;
+					animation-fill-mode: forwards;
+					content: '';
+					position: absolute;
+					top: -110%;
+					left: -210%;
+					width: 200%;
+					height: 200%;
+					opacity: 0;
+					transform: rotate(30deg);
 
-			@keyframes pulse {
-				from {
-					border-color: hsl(0, 0%, 100%);
+					background: rgba(255, 255, 255, 0.13);
+					background: linear-gradient(
+						to right,
+						hsla(0, 0%, 100%, 0) 0%,
+						hsla(0, 0%, 100%, 0.13) 77%,
+						hsla(0, 0%, 100%, 0.7) 92%,
+						hsla(0, 0%, 100%, 0) 100%
+					);
 				}
 
-				50% {
-					border-color: hsl(0, 0%, 40%);
-				}
-
-				to {
-					border-color: hsl(0, 0%, 100%);
+				@keyframes shine {
+					80% {
+						opacity: 1;
+						top: -30%;
+						left: -50%;
+						transition-property: left, top, opacity;
+						transition-duration: 1.7s, 1.7s, 1.15s;
+						transition-timing-function: ease-in-out;
+					}
+					100% {
+						opacity: 0;
+						top: -30%;
+						left: -50%;
+						transition-property: left, top, opacity;
+					}
 				}
 			}
 

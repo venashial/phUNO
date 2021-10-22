@@ -1,17 +1,18 @@
 <script>
 	import Card from '$lib/components/Card.svelte';
-  import { discard } from '../_store.js'
+	import { discard, focused } from '../_store.js';
+	import { choose } from '$lib/utils/actions.js';
 </script>
 
 <div class="piles">
-	<div class="discard">
-		{#each [0,0,0,0] as _}
-			<Card color="black" symbol="" />
+	<div on:click={() => {}}>
+		{#each [0, 0, 0, 0] as _, index}
+			<Card color="black" symbol="" on:click={() => choose('draw')} floatLeft={false} focused={$focused.location === 'draw' && index === 3} />
 		{/each}
 	</div>
-	<div class="discard">
-		{#each $discard as card}
-			<Card {...card} />
+	<div>
+		{#each $discard as card, index}
+			<Card {...card} on:click={() => choose('discard')} floatLeft={false} focused={$focused.location === 'discard' && index === $discard.length - 1} />
 		{/each}
 	</div>
 </div>
@@ -20,7 +21,7 @@
 	.piles {
 		display: flex;
 		font-size: 3vw;
-    justify-content: space-around;
+		justify-content: space-around;
 
 		> div {
 			display: grid;

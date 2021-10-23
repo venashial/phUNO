@@ -7,6 +7,7 @@
 	export let image = '';
 	export let focused = false;
   export let floatLeft = true;
+  export let style = ''
 	let animationSpeed = 1;
 
 	let displayColor = [
@@ -14,8 +15,9 @@
 		'hsl(53, 99%, 47%)',
 		'hsl(101, 79%, 33%)',
 		'hsl(208, 100%, 35%)',
-		'hsl(0, 0%, 10%)'
-	][['red', 'yellow', 'green', 'blue', 'black'].indexOf(color)];
+		'hsl(0, 0%, 10%)',
+    'hsl(0, 0%, 50%)'
+	][['red', 'yellow', 'green', 'blue', 'black', 'grey'].indexOf(color)];
 
 	let text = typeof symbol === 'number' || typeof symbol === 'string';
 
@@ -27,7 +29,7 @@
 </script>
 
 <div
-	class="card"
+	class="card {style}"
 	style="transform: rotate({focused ? (floatLeft ? 364 : Math.random() * 10 + 355) : Math.random() * 2 + 359}deg) translate({focused
 		? (floatLeft ? -20 : 0)
 		: Math.random() * 10 - 5}px, {focused
@@ -87,6 +89,14 @@
 		align-items: center;
 		aspect-ratio: 2.2 / 3.5;
 		transition: transform 1s ease-in-out;
+
+    &.silhouette {
+      filter: brightness(0);
+      opacity: 0.4;
+      .inner {
+        box-shadow: none;
+      }
+    }
 
 		.inner {
       position: relative;

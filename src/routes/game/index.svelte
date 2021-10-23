@@ -2,7 +2,7 @@
 	import { fly } from 'svelte/transition';
 	import { send } from '$lib/utils/api';
 	import '$lib/utils/api';
-	import { state, overlay } from './_store.js';
+	import { state, overlay, code } from './_store.js';
 	import Profile from './_Profile.svelte';
 	import Lobby from './_Lobby.svelte';
 	import Game from './_Game.svelte';
@@ -15,12 +15,23 @@
 		});
 	});
 
+	$: {
+      $state;
+			if ($state === 'lobby') window.history.replaceState(null, null, `?code=${$code.toUpperCase()}`);
+		};
+
 	const flyIn = { x: 400, duration: 500 };
 	const flyOut = { x: -400, duration: 500 };
 </script>
 
 {#if $overlay.show}
-	<Overlay style={$overlay.style} message={$overlay.message} on:close={() => { $overlay.show = false }} />
+	<Overlay
+		style={$overlay.style}
+		message={$overlay.message}
+		on:close={() => {
+			$overlay.show = false;
+		}}
+	/>
 {/if}
 
 <div class="game">
@@ -48,9 +59,9 @@
 			flex-direction: column;
 			gap: 0.5rem;
 
-      > :global(*) {
-        flex: 0.04 1;
-      }
+			> :global(*) {
+				flex: 0.04 1;
+			}
 		}
 	}
 </style>

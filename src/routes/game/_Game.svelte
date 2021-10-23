@@ -2,10 +2,12 @@
 	import Hand from './_Game/_Hand.svelte';
 	import Piles from './_Game/_Piles.svelte';
   import Players from './_Game/_Players.svelte';
+  import { send } from '$lib/utils/api.js'
 </script>
 
 <div class="game">
 	<div class="table">
+    <button on:click={() => send('leave')}>leave</button>
     <Players />
 		<Piles />
 	</div>
@@ -14,6 +16,7 @@
 
 <style lang="scss">
 	.game {
+    flex: unset !important;
 		display: grid;
 		grid-template-columns: 1fr 35vw;
 		height: 100%;

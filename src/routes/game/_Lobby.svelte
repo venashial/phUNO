@@ -29,11 +29,7 @@
 	{#each $players as player}
 		<div class="player">
 			<span>
-        {#if isHost}
-        <b>{player.nickname}</b> (You)
-        {:else}
-        {player.nickname}
-        {/if}
+        <b>{player.nickname}</b> {player.nickname === $nickname ? '(You)' : ''} {player.isHost ? '(Host)' : ''}
       </span>
 			{#if $isHost && player.nickname !== $nickname}
 				<button on:click={() => send('kick', { target: player.nickname })}>Kick</button>

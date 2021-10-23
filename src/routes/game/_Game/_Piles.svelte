@@ -2,17 +2,20 @@
 	import Card from '$lib/components/Card.svelte';
 	import { discard, focused } from '../_store.js';
 	import { choose } from '$lib/utils/actions.js';
+
+  $discard:  ($discard) => { if ($discard) console.log(Object.entries($discard)) }
 </script>
 
 <div class="piles">
-	<div on:click={() => {}}>
+	<div on:click={() => choose('draw')}>
 		{#each [0, 0, 0, 0] as _, index}
-			<Card color="black" symbol="" on:click={() => choose('draw')} floatLeft={false} focused={$focused.location === 'draw' && index === 3} />
+			<Card color="black" symbol="" floatLeft={false} focused={$focused.location === 'draw' && index === 3} />
 		{/each}
 	</div>
-	<div>
-		{#each $discard as card, index}
-			<Card {...card} on:click={() => choose('discard')} floatLeft={false} focused={$focused.location === 'discard' && index === $discard.length - 1} />
+	<div on:click={() => choose('discard')}>
+    <Card color="" symbol="" style="silhouette" />
+		{#each Object.entries($discard).reverse() as [cardIndex, card], index (cardIndex)}
+			<Card {...card} floatLeft={false} focused={$focused.location === 'discard' && index === Object.keys($discard).length - 1} />
 		{/each}
 	</div>
 </div>

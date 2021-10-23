@@ -18,7 +18,11 @@
 
   let numbers = [1, 2, 3]
 
+  let recovery = ''
+
 	onMount(() => {
+    recovery = localStorage.getItem('recovery') || ''
+
 		setInterval(() => {
 			numbers.forEach((number, index) => {
         numbers[index] = number + 1;
@@ -28,7 +32,7 @@
       });
 		}, 1300);
 	});
-</script>
+  </script>
 
 <div class="index">
 	{#if $page.query.get('message')}
@@ -48,7 +52,7 @@
 
 		<a class="button bg-red" href="game?create" sveltekit:prefetch> Create Game </a>
 	</div>
-	{#if typeof localStorage !== 'undefined' && localStorage.getItem('recovery').length > 0}
+	{#if recovery.length > 0}
 		<a class="button bg-green" href="game?create" sveltekit:prefetch> Rejoin last game </a>
 	{/if}
 

@@ -37,8 +37,8 @@
 
 <div class="hand">
   <div class="hand-bg" on:click={() => choose('hand')}></div>
-	{#each $hand as card (card.id)}
-    <Card {...card} focused={$focused.location === 'hand' && $focused.cardIndex === card.id} on:click={() => choose('hand', card.id)} />
+	{#each Object.entries($hand) as [cardIndex, card] (cardIndex)}
+    <Card {...card} focused={$focused.location === 'hand' && $focused.cardIndex === cardIndex} on:click={() => choose('hand', cardIndex)} />
   {/each}
 </div>
 

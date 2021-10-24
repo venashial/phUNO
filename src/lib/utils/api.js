@@ -32,6 +32,14 @@ export async function send(route, body = {}, http = false) {
       socket.addEventListener('message', (event) => {
         receive(JSON.parse(event.data))
       });
+      socket.addEventListener('close', (event) => {
+        overlay.set({
+          show: true,
+          closable: false,
+          style: 'error',
+          message: 'Womp womp. The server just went offline! You\'ll be reconnected as soon as possible...'
+        })
+      });
       if (!socket) {
         console.log('Can\'t connect to the server :(')
       }
@@ -41,6 +49,7 @@ export async function send(route, body = {}, http = false) {
     console.error(error)
     overlay.set({
       show: true,
+      closable: true,
       style: 'error',
       message: 'Womp womp. The server that holds all the rooms isn\'t available, so you won\'t be able to play. Try again in a bit.'
     })

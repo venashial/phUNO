@@ -2,17 +2,20 @@
 	import { createEventDispatcher } from 'svelte';
 	export let style = 'warning';
 	export let message = '';
+  export let closable = true;
 
 	const dispatch = createEventDispatcher();
 </script>
 
 <div class="wrapper">
 	<div class="card {style}">
+    {#if closable}
 		<button
 			on:click={() => {
 				dispatch('close');
 			}}>✕</button
 		>
+    {/if}
 		<h1>{style === 'warning' ? '⚠️' : ''}{style === 'error' ? '🚷' : ''}</h1>
 		<p>{message}</p>
 	</div>

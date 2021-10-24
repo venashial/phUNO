@@ -32,6 +32,7 @@ export const state = writable('profile');
 
 export const overlay = writable({
   show: false,
+  closable: true,
   style: '',
   message: '',
 });

@@ -5,6 +5,7 @@ export function receive(data) {
   if (data.error) {
     store.overlay.set({
       style: 'warning',
+      closable: true,
       message: data.error,
       show: true,
     })

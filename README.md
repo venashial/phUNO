@@ -1,4 +1,4 @@
-# phDOS
+# phUNO
 
 *UNO for free, online, multiplayer, with any rules*
 

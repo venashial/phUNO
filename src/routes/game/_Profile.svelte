@@ -20,6 +20,7 @@
 		if (!nickname) {
 			$overlay = {
 				show: true,
+        closable: true,
 				style: 'warning',
 				message: "Sorry, but you can't be nameless. Enter a name."
 			};

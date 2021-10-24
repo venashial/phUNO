@@ -78,8 +78,6 @@ on:click={async () => {
 		padding: 0.2rem 0.4rem;
 		border-radius: 0.2rem;
 		border: 0.2rem solid transparent;
-		overflow-x: auto;
-		white-space: nowrap;
 		display: flex;
 		align-items: center;
 		justify-content: center;

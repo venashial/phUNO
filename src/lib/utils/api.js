@@ -4,15 +4,15 @@ import { receive } from '$lib/utils/receiver.js'
 import { overlay, code } from '../../routes/game/_store.js'
 
 let codeValue = ''
-
 code.subscribe(value => {
   codeValue = value;
 });
 
 export let socket;
 
-export async function send(route, body = {}, http = false) {
+export async function send(route = '', body = {}, http = false) {
   try {
+    /*
     if (http === true) {
       const response = await fetch(`http${USE_HTTPS ? 's' : ''}://${API_URL}${route}`, {
         method: 'POST',
@@ -28,42 +28,67 @@ export async function send(route, body = {}, http = false) {
         throw new Error(response.statusText)
       }
     } else {
-      if (!socket) socket = await connect()
-      socket.addEventListener('message', (event) => {
-        receive(JSON.parse(event.data))
-      });
-      socket.addEventListener('close', (event) => {
-        overlay.set({
-          show: true,
-          closable: false,
-          style: 'error',
-          message: 'Womp womp. The server just went offline! You\'ll be reconnected as soon as possible...'
-        })
-      });
-      if (!socket) {
-        console.log('Can\'t connect to the server :(')
-      }
-      socket.send(JSON.stringify({ route, body: {...body, ...(codeValue !== '' ? { code: codeValue} : {}) } }))
-    }
+    */
+    if (!socket || socket.readyState === 3) socket = await connect()
+
+    socket.send(JSON.stringify({ route, body: { ...body, ...(codeValue !== '' ? { code: codeValue } : {}) } }))
   } catch (error) {
     console.error(error)
-    overlay.set({
-      show: true,
-      closable: true,
-      style: 'error',
-      message: 'Womp womp. The server that holds all the rooms isn\'t available, so you won\'t be able to play. Try again in a bit.'
-    })
   }
 }
 
-function connect() {
+function connect(tries = 0) {
   return new Promise(function (resolve, reject) {
-    var server = new WebSocket(`ws${USE_HTTPS ? 's' : ''}://${API_URL}/ws`);
-    server.onopen = function () {
+    console.log('Connecting...')
+    const server = new WebSocket(`ws${USE_HTTPS ? 's' : ''}://${API_URL}/ws`);
+
+    const timer = setTimeout(() => {
+      reject(new Error("WebSocket timeout"));
+      clearTimeout(timer);
+      server.close();
+    }, 2000); // <- timeout
+
+    server.onopen = () => {
+      clearTimeout(timer);
+      if (tries > 0) {
+        console.log(`Reconnected after ${tries} tries`)
+        overlay.set({
+          show: false,
+          closable: true,
+          style: '',
+          message: ''
+        })
+        send('register', {
+          recovery: localStorage.getItem('recovery')
+        });
+      }
       resolve(server);
     };
-    server.onerror = function (err) {
+
+    server.onerror = (err) => {
+      console.log('Socket errored');
       reject(err);
+    };
+
+    server.onmessage = (event) => {
+      receive(JSON.parse(event.data))
+    };
+
+    let closing = false;
+
+    window.onbeforeunload = () => {
+      closing = true;
+    };
+
+    server.onclose = () => {
+      console.log('Socket closed!')
+      overlay.set({
+        show: true,
+        closable: false,
+        style: 'error',
+        message: 'Womp womp. The server just went offline! You\'ll be reconnected as soon as possible' + '.'.repeat(tries)
+      })
+      if (!closing) setTimeout(() => connect(tries + 1).catch(() => console.log('Reconnect failed')), tries < 10 ? 2000 : 10000);
     };
   });
 }

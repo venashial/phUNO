@@ -36,3 +36,8 @@ export const overlay = writable({
   style: '',
   message: '',
 });
+
+export const gamePage = writable({
+  page: '',
+  color: '',
+});

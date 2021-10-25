@@ -16,9 +16,9 @@
 	});
 
 	$: {
-      $state;
-			if ($state === 'lobby') window.history.replaceState(null, null, `?code=${$code.toUpperCase()}`);
-		};
+		$state;
+		if ($state === 'lobby') window.history.replaceState(null, null, `?code=${$code.toUpperCase()}`);
+	}
 
 	const flyIn = { x: 400, duration: 500 };
 	const flyOut = { x: -400, duration: 500 };
@@ -28,6 +28,7 @@
 	<Overlay
 		style={$overlay.style}
 		message={$overlay.message}
+		closable={$overlay.closable}
 		on:close={() => {
 			$overlay.show = false;
 		}}
@@ -52,14 +53,12 @@
 		> div {
 			grid-area: 1/1/2/2;
 			min-width: 40vw;
-			@media screen and (max-width: 600px) {
-				min-width: calc(100vw - 1rem);
-			}
+			min-width: 100vw;
 			display: flex;
 			flex-direction: column;
 			gap: 0.5rem;
 
-			> :global(*) {
+			> :global(*:not(.game)) {
 				flex: 0.04 1;
 			}
 		}

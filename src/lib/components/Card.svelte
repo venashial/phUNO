@@ -1,14 +1,16 @@
 <script>
+	import { send, receive } from '$lib/utils/crossfade.js';
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
 	export let color = '';
 	export let symbol = '';
-	export let image = '';
 	export let focused = false;
-  export let floatLeft = true;
-  export let style = ''
-	let animationSpeed = 1;
+	export let floatLeft = true;
+	export let style = '';
+	export let cardIndex = '';
+
+	let animationSpeed = 0.3;
 
 	let displayColor = [
 		'hsl(10, 100%, 41%)',
@@ -16,11 +18,12 @@
 		'hsl(101, 79%, 33%)',
 		'hsl(208, 100%, 35%)',
 		'hsl(0, 0%, 10%)',
-    'hsl(0, 0%, 50%)'
+		'hsl(0, 0%, 50%)'
 	][['red', 'yellow', 'green', 'blue', 'black', 'grey'].indexOf(color)];
 
 	let text = typeof symbol === 'number' || typeof symbol === 'string';
 
+  let image = '';
 	let display = image ? `<img src="${image}">` : symbol;
 
 	setTimeout(() => {
@@ -28,58 +31,74 @@
 	}, 1000);
 </script>
 
-<div
-	class="card {style}"
-	style="transform: rotate({focused ? (floatLeft ? 364 : Math.random() * 10 + 355) : Math.random() * 2 + 359}deg) translate({focused
-		? (floatLeft ? -20 : 0)
-		: Math.random() * 10 - 5}px, {focused
-		? (floatLeft ? -20 : -40)
-		: Math.random() * 10 - 5}px); transition: transform {animationSpeed}s ease-in-out;"
-	on:click={() => dispatch('click')}
->
-	<div class="inner" style="background-color: {displayColor}" class:focused>
-		<svg
-			xmlns="http://www.w3.org/2000/svg"
-			xml:space="preserve"
-			fill-rule="evenodd"
-			stroke-linejoin="round"
-			stroke-miterlimit="2"
-			clip-rule="evenodd"
-			viewBox="0 0 159 252"
-		>
-			<path fill="none" d="M0 0h158v252H0z" />
-			<clipPath id="a">
-				<path d="M0 0h158v252H0z" />
-			</clipPath>
-			<g clip-path="url(#a)">
-				<g transform="matrix(1.81291 1.04669 -.96017 1.66307 96 -137)">
-					<ellipse cx="56" cy="123" fill="none" rx="31" ry="63" />
-					<clipPath id="b">
-						<ellipse cx="56" cy="123" rx="31" ry="63" />
-					</clipPath>
-					<g clip-path="url(#b)">
-						<use
-							xlink:href="#c"
-							width="955"
-							height="859"
-							transform="matrix(.06862 -.04319 .03962 .0748 6 111)"
+{#key cardIndex}
+	<div
+		in:receive={{ key: cardIndex }}
+		out:send={{ key: cardIndex }}
+		class="card {style}"
+    class:underline={symbol === '6' || symbol === '9'}
+		style="transform: rotate({focused
+			? floatLeft
+				? 364
+				: Math.random() * 10 + 355
+			: Math.random() * 2 + 359}deg) translate({focused
+			? floatLeft
+				? -20
+				: 0
+			: Math.random() * 10 - 5}px, {focused
+			? floatLeft
+				? -20
+				: -40
+			: Math.random() * 10 - 5}px); transition: transform {animationSpeed}s ease-in-out;
+    "
+		on:click={() => dispatch('click')}
+	>
+		<div class="inner" style="background-color: {displayColor}" class:focused>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				xml:space="preserve"
+				fill-rule="evenodd"
+				stroke-linejoin="round"
+				stroke-miterlimit="2"
+				clip-rule="evenodd"
+				viewBox="0 0 159 252"
+			>
+				<path fill="none" d="M0 0h158v252H0z" />
+				<clipPath id="a">
+					<path d="M0 0h158v252H0z" />
+				</clipPath>
+				<g clip-path="url(#a)">
+					<g transform="matrix(1.81291 1.04669 -.96017 1.66307 96 -137)">
+						<ellipse cx="56" cy="123" fill="none" rx="31" ry="63" />
+						<clipPath id="b">
+							<ellipse cx="56" cy="123" rx="31" ry="63" />
+						</clipPath>
+						<g clip-path="url(#b)">
+							<use
+								xlink:href="#c"
+								width="955"
+								height="859"
+								transform="matrix(.06862 -.04319 .03962 .0748 6 111)"
+							/>
+						</g>
+						<path
+							fill="#fff"
+							d="M56 60c17 0 31 28 31 63s-14 63-31 63-31-28-31-63 14-63 31-63Zm0 3c6 0 11 5 16 11 7 11 12 29 12 49s-5 38-12 49c-5 6-10 11-16 11s-11-5-16-11c-7-11-12-29-12-49s5-38 12-49c5-6 10-11 16-11Z"
 						/>
 					</g>
-					<path
-						fill="#fff"
-						d="M56 60c17 0 31 28 31 63s-14 63-31 63-31-28-31-63 14-63 31-63Zm0 3c6 0 11 5 16 11 7 11 12 29 12 49s-5 38-12 49c-5 6-10 11-16 11s-11-5-16-11c-7-11-12-29-12-49s5-38 12-49c5-6 10-11 16-11Z"
-					/>
 				</g>
-			</g>
-		</svg>
-		<div class="center" class:text>{@html display}</div>
-		<div class="tiny top" class:text>{@html display}</div>
-		<div class="tiny bottom" class:text>{@html display}</div>
+			</svg>
+			<div class="center" class:text>{@html display}</div>
+			<div class="tiny top" class:text>{@html display}</div>
+			<div class="tiny bottom" class:text>{@html display}</div>
+		</div>
 	</div>
-</div>
+{/key}
 
 <style lang="scss">
 	.card {
+    width: 100px;
+    font-size: 15px;
 		--border: 0.4em;
 		display: flex;
 		border-radius: calc(var(--border) * 1.4);
@@ -89,17 +108,18 @@
 		align-items: center;
 		aspect-ratio: 2.2 / 3.5;
 		transition: transform 1s ease-in-out;
+    text-decoration: underline;
 
-    &.silhouette {
-      filter: brightness(0);
-      opacity: 0.4;
-      .inner {
-        box-shadow: none;
-      }
-    }
+		&.silhouette {
+			filter: brightness(0);
+			opacity: 0.4;
+			.inner {
+				box-shadow: none;
+			}
+		}
 
 		.inner {
-      position: relative;
+			position: relative;
 			border: var(--border) solid hsl(0, 0%, 100%);
 			box-shadow: 0 -0.2em 0.5em hsla(0, 0%, 0%, 0.4);
 			border-radius: calc(var(--border) * 1.4);
@@ -113,7 +133,7 @@
 			justify-content: center;
 			align-items: center;
 			transition: border 0.5s ease-in-out;
-      overflow: hidden;
+			overflow: hidden;
 
 			&.focused {
 				&:after {
@@ -177,8 +197,8 @@
 				}
 
 				&.text {
-					padding: 0.1em 0.4em;
-					font-size: 2em;
+					padding: 0em 0.18em;
+					font-size: 1.9em;
 				}
 			}
 

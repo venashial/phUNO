@@ -6,6 +6,8 @@
 	import { onMount } from 'svelte';
 	import { flip } from 'svelte/animate';
 
+  const name = import.meta.env.VITE_NAME || 'phUNO'
+
 	function join() {
 		const code = prompt(
 			"Enter the host's code. Alternatively, have the host send you the link to the game."
@@ -59,7 +61,7 @@
 		{/each}
 	</div>
 
-	<p>This is <b>phUNO</b>, an online version of the card game UNO.</p>
+	<p>This is <b>{name}</b>, an online version of the card game UNO.</p>
 
 	<div class="actions">
 		<button class="bg-blue" on:click={join}>Join Game</button>

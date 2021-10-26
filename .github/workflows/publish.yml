@@ -8,6 +8,7 @@ on:
 env:
   VITE_API_URL: 'api-uno.venashial.games'
   VITE_USE_HTTPS: 'true'
+  VITE_NAME: 'uno.land'
 
 jobs:
     build:

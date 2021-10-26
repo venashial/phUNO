@@ -116,14 +116,16 @@
 
 		.actions {
       position: fixed;
-      bottom: 1rem;
-      left: 1rem;
+      padding: 1rem;
       width: calc(100% - 2rem);
+      bottom: 0;
+      left: 0;
 			display: flex;
       flex-direction: column;
 			gap: 1rem;
 			margin-top: auto;
       font-size: 1.5rem;
+      background: linear-gradient(transparent 0%, hsl(0, 0%, 25%) 60%, hsl(0, 0%, 25%));
 		}
 
 		.notes {

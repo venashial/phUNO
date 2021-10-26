@@ -63,6 +63,10 @@ input {
 	color: hsl(0, 100%, 100%);
 }
 
+ul {
+  margin: 0;
+}
+
 .bg-red {
 	background-color: hsl(0, 60%, 70%) !important;
 }
@@ -75,6 +79,10 @@ input {
 .bg-blue {
 	background-color: hsl(200, 60%, 70%) !important;
 }
+.bg-white {
+	background-color: hsl(0, 0%, 100%) !important;
+}
+
 
 .mini {
 	font-size: 0.6rem;

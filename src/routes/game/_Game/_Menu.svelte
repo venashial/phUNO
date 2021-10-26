@@ -16,7 +16,7 @@
   <Option page="history" color="hsla(35, 90%, 60%, 1)">
     <GiSandsOfTime />
   </Option>
-  <Option page="" color="hsla(10, 30%, 40%, 1)">
+  <Option page="" color="hsla(8, 30%, 30%, 1)">
     <GiTabletopPlayers />
   </Option>
 </div>

@@ -2,15 +2,6 @@
 	import { send } from '$lib/utils/api.js';
 </script>
 
-<div>
-	Are you sure you want to leave?
+<h3>Are you sure you want to leave?</h3>
 
-	<button class="bg-yellow" on:click={() => send('leave')}> Leave game </button>
-</div>
-
-<style>
-	button {
-		margin-top: 1rem;
-		width: 100%;
-	}
-</style>
+<button class="bg-white" on:click={() => send('leave')}> Leave game </button>

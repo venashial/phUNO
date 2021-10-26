@@ -44,6 +44,7 @@ function connect(tries = 0) {
 
     const timer = setTimeout(() => {
       reject(new Error("WebSocket timeout"));
+      console.log('Socket connection timed out.')
       clearTimeout(timer);
       server.close();
     }, 2000); // <- timeout

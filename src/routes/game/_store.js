@@ -41,3 +41,5 @@ export const gamePage = writable({
   page: '',
   color: '',
 });
+
+export const log = writable([]);

@@ -8,6 +8,9 @@ on:
 jobs:
     build:
       runs-on: ubuntu-latest
+      env:
+        VITE_API_URL: 'true'
+        VITE_USE_HTTPS: 'api-uno.venashial.games'
       steps:
         - name: Checkout
           uses: actions/checkout@v2

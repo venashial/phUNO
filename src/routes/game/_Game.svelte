@@ -5,6 +5,8 @@
 	import Menu from './_Game/_Menu.svelte';
 	import { gamePage } from './_store.js';
 	import Leave from './_Game/_Page/_Leave.svelte';
+	import Help from './_Game/_Page/_Help.svelte';
+  import History from './_Game/_Page/_History.svelte';
 	import { fly } from 'svelte/transition';
 </script>
 
@@ -12,11 +14,15 @@
 	{#if $gamePage.page}
 		<div
 			class="page"
-			style="background-color: {$gamePage.color.replace('1)', '0.6)')}"
+			style="background-color: {$gamePage.color.replace('60%, 1)', '40%, 0.8)')}"
 			transition:fly={{ y: -1000, duration: 1000 }}
 		>
 			{#if $gamePage.page === 'leave'}
 				<Leave />
+			{:else if $gamePage.page === 'help'}
+				<Help />
+      {:else if $gamePage.page === 'history'}
+        <History />
 			{/if}
 		</div>
 	{/if}
@@ -51,7 +57,19 @@
 			flex-direction: column;
 			color: white;
 			padding: 1rem;
-			backdrop-filter: blur(7px);
+			backdrop-filter: blur(10px);
+      grid-gap: 0.5rem;
+      overflow-y: auto;
+
+			:global(button) {
+        flex: 0 1;
+			}
+
+			@media screen and (min-width: 600px) {
+        justify-content: flex-start;
+				width: calc(100vw - (100vw - 600px));
+				padding: 1rem calc((100vw - 600px) / 2);
+			}
 		}
 
 		.hand-table {

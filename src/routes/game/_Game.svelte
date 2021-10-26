@@ -8,9 +8,18 @@
 	import Help from './_Game/_Page/_Help.svelte';
   import History from './_Game/_Page/_History.svelte';
 	import { fly } from 'svelte/transition';
+  import { onMount } from 'svelte'
+
+  let windowHeight = window.innerHeight
+
+  onMount(() => {
+    addEventListener('resize', () => {
+      windowHeight = window.innerHeight
+    })
+  })
 </script>
 
-<div class="game" style="height: {window.innerHeight}px; max-height: {window.innerHeight}px">
+<div class="game" style="height: calc({windowHeight}px + 0.5rem);">
 	{#if $gamePage.page}
 		<div
 			class="page"
@@ -43,8 +52,11 @@
 		flex-direction: column;
 		width: 100vw;
 		overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
 		margin-top: -0.5rem;
-		position: relative;
+    background-color: hsl(20, 30%, 25%);
 
 		.page {
 			position: absolute;

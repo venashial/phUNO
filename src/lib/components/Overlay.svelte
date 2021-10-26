@@ -43,6 +43,8 @@
 			padding: 6vw 6.5vw;
 			border-radius: 1rem;
 			box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      font-size: 1.2rem;
+      text-align: center;
 
 			&.warning {
 				background-color: hsl(45, 100%, 80%);

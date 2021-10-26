@@ -1,22 +1,27 @@
-html, #svelte {
-  height: 100%;
+#svelte {
+  width: 100%;
 }
 
 body {
   height: 100%;
   margin: 0;
-  padding: 0.5rem;
+  padding: 1rem;
   font-size: 16px;
-  background-color: hsl(20, 30%, 25%);
+  background-color: hsl(0, 0%, 25%);
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   color: white;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   @media screen and (max-width: 600px) {
     font-size: 20px;
+  }
+
+  @media screen and (min-width: 600px) {
+    padding: 1rem 3rem;
   }
 }
 

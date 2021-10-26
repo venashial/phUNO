@@ -50,7 +50,7 @@
 {/if}
 <button
 class="bg-blue"
-style="margin-top: auto; margin-bottom: 2rem;"
+style="margin-top: auto"
 on:click={async () => {
   await send('leave');
 }}>Leave room</button

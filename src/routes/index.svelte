@@ -5,8 +5,12 @@
 	import Card from '$lib/components/Card.svelte';
 	import { onMount } from 'svelte';
 	import { flip } from 'svelte/animate';
+	import IconBlock from '$lib/components/IconBlock.svelte';
+	import GiCardPlay from 'svelte-icons/gi/GiCardPlay.svelte';
+	import GiBlackBook from 'svelte-icons/gi/GiBlackBook.svelte';
+	import GiTechnoHeart from 'svelte-icons/gi/GiTechnoHeart.svelte';
 
-  const name = import.meta.env.VITE_NAME || 'phUNO'
+	const name = import.meta.env.VITE_NAME || 'phUNO';
 
 	function join() {
 		const code = prompt(
@@ -61,24 +65,30 @@
 		{/each}
 	</div>
 
-	<p>This is <b>{name}</b>, an online version of the card game UNO.</p>
+	<IconBlock text="This is <b>{name}</b>, an online version of the card game UNO."
+		><GiCardPlay /></IconBlock
+	>
+
+	<IconBlock
+		text="Play by your own rules! Try <a href='https://www.spicy-uno.com/#201259522'>Spicy Uno</a> for a refreshing take."
+		><GiBlackBook /></IconBlock
+	>
+
+	<IconBlock
+		text="Want to make {name} better? Contribute to the <a href='https://github.com/venashial/phUNO'>website</a>
+		& <a href='https://github.com/venashial/phDOS'>server</a>."><GiTechnoHeart /></IconBlock
+	>
+  
+  <div class="spacer"></div>
 
 	<div class="actions">
 		<button class="bg-blue" on:click={join}>Join Game</button>
 
 		<a class="button bg-red" href="game?create" sveltekit:prefetch> Create Game </a>
+		{#if recovery.length > 0}
+			<a class="button bg-green" href="game?create" sveltekit:prefetch> Rejoin last game </a>
+		{/if}
 	</div>
-	{#if recovery.length > 0}
-		<a class="button bg-green" href="game?create" sveltekit:prefetch> Rejoin last game </a>
-	{/if}
-
-	<p class="notes">
-		Use a phone to play for the best experience. Rules are not included, but I reccommend <a
-			href="https://www.spicy-uno.com/#201259522">Spicy Uno</a
-		>. View the source code on GitHub for the
-		<a href="https://github.com/venashial/phUNO">website</a>
-		& <a href="https://github.com/venashial/phDOS">server</a>.
-	</p>
 </div>
 
 <style lang="scss">
@@ -88,22 +98,32 @@
 		gap: 1rem;
 		max-width: 600px;
 		margin: auto;
-		.actions {
-			display: flex;
-			gap: 1rem;
-			@media screen and (max-width: 400px) {
-				flex-direction: column;
-			}
-		}
+		height: calc(100% - 1rem);
 
-		.card-display {
+    .card-display {
 			height: 43vw;
 			font-size: 0.8rem;
 			max-height: 10rem;
 			display: flex;
 			padding: 1rem;
 			justify-content: center;
-			margin-bottom: 2rem;
+			margin: 2rem 0;
+		}
+
+    .spacer {
+      margin-top: 10rem;
+    }
+
+		.actions {
+      position: fixed;
+      bottom: 1rem;
+      left: 1rem;
+      width: calc(100% - 2rem);
+			display: flex;
+      flex-direction: column;
+			gap: 1rem;
+			margin-top: auto;
+      font-size: 1.5rem;
 		}
 
 		.notes {

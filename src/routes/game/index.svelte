@@ -48,12 +48,14 @@
 <style lang="scss">
 	.game {
 		display: grid;
-		height: 100%;
+    height: calc(100vh - 2rem);
+    overflow: hidden;
+    max-height: calc(100vh - 2rem);
 
 		> div {
 			grid-area: 1/1/2/2;
 			min-width: 40vw;
-			min-width: 100vw;
+			min-width: 100%;
 			display: flex;
 			flex-direction: column;
 			gap: 0.5rem;

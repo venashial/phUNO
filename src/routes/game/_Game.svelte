@@ -23,9 +23,9 @@
 	{#if $gamePage.page}
 		<div
 			class="page"
-			style="background-color: {$gamePage.color.replace('60%, 1)', '40%, 0.8)')}"
-			transition:fly={{ y: -1000, duration: 1000 }}
+			style="background-color: {$gamePage.color.replace('60%, 1)', '30%, 0.8)')}"
 		>
+    	<!-- transition:fly={{ y: -1000, duration: 1000 }} -->
 			{#if $gamePage.page === 'leave'}
 				<Leave />
 			{:else if $gamePage.page === 'help'}

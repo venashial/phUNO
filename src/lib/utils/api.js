@@ -47,7 +47,7 @@ function connect(tries = 0) {
       console.log('Socket connection timed out.')
       clearTimeout(timer);
       server.close();
-    }, 2000); // <- timeout
+    }, 3000); // <- timeout
 
     server.onopen = () => {
       clearTimeout(timer);
@@ -89,7 +89,7 @@ function connect(tries = 0) {
         style: 'error',
         message: 'Womp womp. The server just went offline! You\'ll be reconnected as soon as possible' + '.'.repeat(tries)
       })
-      if (!closing) setTimeout(() => connect(tries + 1).catch(() => console.log('Reconnect failed')), tries < 10 ? 2000 : 10000);
+      if (!closing) setTimeout(() => connect(tries + 1).catch(() => console.log('Reconnect failed')), tries < 10 ? 3000 : 10000);
     };
   });
 }

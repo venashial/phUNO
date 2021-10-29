@@ -53,6 +53,10 @@
     "
 		on:click={() => dispatch('click')}
 	>
+  <!-- Suburst radial gradient: background: repeating-conic-gradient(
+      hsla(0,0%,100%,.1) 0deg 15deg,
+      hsla(0,0%,100%,0) 0deg 30deg
+    ) {displayColor}; -->
 		<div class="inner" style="background-color: {displayColor}" class:focused>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"

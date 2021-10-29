@@ -13,13 +13,28 @@
 
     tableDiv.scrollIntoView({ behavior: 'smooth', block: 'end' })
 	});
+
+  const alphabet = "abcdefghijklmnopqrstuvwxyz".split('');
+
+  function colorFromLetter(letter) {
+    const number = alphabet.indexOf(letter) + 1
+    if (number > alphabet.length * 3/4) {
+      return 'hsl(10, 100%, 71%)'
+    } else if (number > alphabet.length * 1/2) {
+      return 'hsl(53, 99%, 67%)'
+    } else if (number > alphabet.length * 1/4) {
+      return 'hsl(101, 79%, 63%)'
+    } else {
+      return 'hsl(208, 100%, 75%)'
+    }
+  }
 </script>
 
 <div class="table" bind:this={tableDiv}>
 	<div><h1>History</h1></div>
 
 	{#each $log as logItem, index (logItem.time)}
-		<div>
+		<div style="--accent: {colorFromLetter(logItem.message[0])}">
 			<div>{logItem.message}</div>
 			<div class="time">{fuzzyTime(now, logItem.time)}</div>
 		</div>
@@ -34,7 +49,7 @@
 		flex-direction: column;
 		grid-gap: 3rem;
 
-		&:before {
+		&::before {
 			content: '';
 			position: absolute;
 			top: 1rem;
@@ -63,14 +78,14 @@
 					text-align: end;
 				}
 
-				&:before {
+				&::before {
 					content: '';
 					position: absolute;
 					top: 0rem;
 					left: -2.5rem;
 					width: 2rem;
 					height: 2rem;
-					background-color: hsla(0, 0%, 100%, 1);
+					background-color: var(--accent);
 					border-radius: 100%;
 				}
 			}

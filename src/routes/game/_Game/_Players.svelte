@@ -2,6 +2,10 @@
 	import Card from '$lib/components/Card.svelte';
 	import { players, nickname, isHost } from '../_store';
   import { send } from '$lib/utils/api.js'
+
+  $: if ($players) {
+    console.log($players)
+  }
 </script>
 
 <div class="players">
@@ -42,6 +46,7 @@
 		flex-direction: column;
 		overflow-y: auto;
 		flex: 1;
+    padding: 1rem;
 
 		.hands {
 			display: flex;

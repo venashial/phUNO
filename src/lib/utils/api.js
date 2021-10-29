@@ -62,6 +62,8 @@ function connect(tries = 0) {
         send('register', {
           recovery: localStorage.getItem('recovery')
         });
+      } else {
+        console.log('Connected!')
       }
       resolve(server);
     };
@@ -89,7 +91,7 @@ function connect(tries = 0) {
         style: 'error',
         message: 'Womp womp. The server just went offline! You\'ll be reconnected as soon as possible' + '.'.repeat(tries)
       })
-      if (!closing) setTimeout(() => connect(tries + 1).catch(() => console.log('Reconnect failed')), tries < 10 ? 3000 : 10000);
+      if (!closing) setTimeout(() => connect(tries + 1), tries < 10 ? 3000 : 10000);
     };
   });
 }

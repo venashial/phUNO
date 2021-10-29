@@ -3,12 +3,15 @@
 	import { isHost, code, overlay } from './_store.js';
 	import { send } from '$lib/utils/api';
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 
 	let nickname;
 
-	if (!$page.query.get('code') && typeof $page.query.get('create') !== 'string') {
-		goto('/');
-	}
+	onMount(() => {
+		if (!$page.query.get('code') && typeof $page.query.get('create') !== 'string') {
+			goto('/');
+		}
+	});
 
 	const isNewGame = typeof $page.query.get('create') === 'string';
 	if (isNewGame) $isHost = true;
@@ -20,7 +23,7 @@
 		if (!nickname) {
 			$overlay = {
 				show: true,
-        closable: true,
+				closable: true,
 				style: 'warning',
 				message: "Sorry, but you can't be nameless. Enter a name."
 			};

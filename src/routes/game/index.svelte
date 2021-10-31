@@ -37,7 +37,7 @@
 
 <div class="game">
 	{#if $state === 'profile'}
-		<div in:fly={flyIn} out:fly={flyOut}><Profile /></div>
+		<div><Profile /></div>
 	{:else if $state === 'lobby'}
 		<div in:fly={flyIn} out:fly={flyOut}><Lobby /></div>
 	{:else if $state === 'game'}

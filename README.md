@@ -1,7 +1,12 @@
-# phUNO
+<img src="static/favicon.png" align="right" />
+
+<h1>phUNO</h1>
 
 *UNO for free, online, multiplayer, with any rules*
 
+| | | | |
+| --- | --- | --- | --- |
+| ![Homepage](docs/images/Screen%20Shot%202021-11-01%20at%2020.40.01.png) | ![Lobby](docs/images/Screen%20Shot%202021-11-01%20at%2020.40.34.png) | ![Game](docs/images/Screen%20Shot%202021-11-01%20at%2020.41.16.png) | ![History](docs/images/Screen%20Shot%202021-11-01%20at%2020.41.55.png) |
 ### How it works
 
 phUNO is a SvelteKit website that connects to a backend, [phDOS](https://github.com/venashial/phDOS) server. They use [native websockets to communicate](src/lib/utils/api.js). The [index page](src/routes/index.svelte) simply directs the player to the game page.
